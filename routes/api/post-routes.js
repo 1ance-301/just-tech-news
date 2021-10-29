@@ -13,6 +13,14 @@ router.get('/', (req, res) => {
         order: [['created_at', 'DESC']],
         include: [
             {
+                model: Comment,
+                attributes: ['id', 'comment_text', 'post_id', 'user_id', 'created_at'],
+                include: {
+                    model: User,
+                    attributes: ['username']
+                }
+            },
+            {
                 model: User,
                 attributes: ['username']
             }
@@ -72,11 +80,11 @@ router.post('/', (req, res) => {
 
 router.put('/upvote', (req, res) => {
     Post.upvote(req.body, { Vote })
-    .then(updatedPostData => res.json(updatedPostData))
-    .catch(err => {
-      console.log(err);
-      res.status(400).json(err);
-    });
+        .then(updatedPostData => res.json(updatedPostData))
+        .catch(err => {
+            console.log(err);
+            res.status(400).json(err);
+        });
 });
 
 router.put('/:id', (req, res) => {
