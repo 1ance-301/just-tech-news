@@ -18,14 +18,14 @@ const sess = {
     })
 };
 
-app.use(session(sess));
-
 const app = express();
 const PORT = process.env.PORT || 3001;
 
 // sets handlebars as default engine
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
+
+app.use(session(sess));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
